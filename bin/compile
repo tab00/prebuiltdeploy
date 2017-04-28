@@ -213,6 +213,7 @@ fi
 
 echo "-----> Building Meteor app with ROOT_URL: $ROOT_URL"
 BUNDLE_DEST=`mktemp -d "$BUILDPACK_DIR/build-XXXX"`
+echo "BUNDLE_DEST = $BUNDLE_DEST" #  /tmp/buildpacks/4ba03ce399e56995160747b832f5e464/build-qKQH
 
 # The actual invocation of `meteor build`!
 # METEOR build $BUILD_OPTIONS --server $ROOT_URL $SERVER_ONLY_FLAG --directory $BUNDLE_DEST
@@ -224,8 +225,6 @@ BUNDLE_DEST=`mktemp -d "$BUILDPACK_DIR/build-XXXX"`
 # echo "List of files in app: `ls app`"
 
 echo "APP_SOURCE_DIR = $APP_SOURCE_DIR" # /tmp/app/.meteor/heroku_build
-BUNDLE_DEST=`mktemp -d "$BUILDPACK_DIR/build-XXXX"`
-echo "BUNDLE_DEST = $BUNDLE_DEST" #  /tmp/buildpacks/4ba03ce399e56995160747b832f5e464/build-qKQH
 
 if [ -e $APP_SOURCE_DIR/*.gz ]; then
 for archive in $APP_SOURCE_DIR/*.gz; do
