@@ -175,10 +175,10 @@ else
   NODE_INSTALLER=node-installer.tar.gz
   NODE_URL="https://s3pository.heroku.com/node/v$NODE_VER_AVAILABLE/node-v$NODE_VER_AVAILABLE-linux-x64.tar.gz"
   curl $NODE_URL > $NODE_INSTALLER
-  tar -zxf $NODE_INSTALLER -C $BUILD_DIR
+  tar -zxf $NODE_INSTALLER -C $CACHE_DIR
 
   # Move node (and npm) into $NODE and make them executable
-  mv $BUILD_DIR/node-v$NODE_VER_AVAILABLE-linux-x64//bin/node $NODE
+  mv $CACHE_DIR/node-v$NODE_VER_AVAILABLE-linux-x64//bin/node $NODE
 fi
 
 chmod a+x "$NODE"
