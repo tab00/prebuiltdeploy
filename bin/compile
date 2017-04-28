@@ -177,6 +177,7 @@ else
   NODE_URL="https://s3pository.heroku.com/node/v$NODE_VER_AVAILABLE/node-v$NODE_VER_AVAILABLE-linux-x64.tar.gz"
   curl $NODE_URL > $NODE_INSTALLER
   tar -zxf $NODE_INSTALLER -C $CACHE_DIR
+  rm -f $NODE_INSTALLER
 
   # Move node (and npm) into $NODE and make them executable
   mv $CACHE_DIR/node-v$NODE_VER_AVAILABLE-linux-x64/bin/node $NODE
@@ -226,7 +227,7 @@ echo "BUNDLE_DEST = $BUNDLE_DEST" #  /tmp/buildpacks/4ba03ce399e56995160747b832f
 
 echo "APP_SOURCE_DIR = $APP_SOURCE_DIR" # /tmp/app/.meteor/heroku_build
 
-if [ -e $APP_SOURCE_DIR/*.gz ]; then
+if [ -e "$APP_SOURCE_DIR"/*.gz ]; then
 for archive in $APP_SOURCE_DIR/*.gz; do
   echo "archive: $archive"
   tar -zxf $archive -C $BUNDLE_DEST
