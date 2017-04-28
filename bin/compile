@@ -163,10 +163,11 @@ if [ -z "$METEOR_NPM" ] || [ -z "$METEOR_NODE" ] ; then
   exit 1
 fi
 
+NODE="$COMPILE_DIR"/bin/node
+
 if [ -n "${USE_METEOR_NODE+1}" ]; then
   # Copy node into place for production.
   echo "-----> Using Meteor's Node"  
-  NODE="$COMPILE_DIR"/bin/node
   cp "$METEOR_NODE" "$NODE"
 else
   NODE_VER_AVAILABLE=$(curl --silent --get https://semver.io/node/resolve/4.x.x)
@@ -178,7 +179,7 @@ else
   tar -zxf $NODE_INSTALLER -C $CACHE_DIR
 
   # Move node (and npm) into $NODE and make them executable
-  mv $CACHE_DIR/node-v$NODE_VER_AVAILABLE-linux-x64//bin/node $NODE
+  mv $CACHE_DIR/node-v$NODE_VER_AVAILABLE-linux-x64/bin/node $NODE
 fi
 
 chmod a+x "$NODE"
