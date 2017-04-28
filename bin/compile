@@ -12,6 +12,7 @@ set -e
 echo "arg 0 = $0" # path to compile script e.g. /tmp/buildpacks/4ba03ce399e56995160747b832f5e464/bin/compile
 echo "arg 1 = $1" # build output directory e.g. /tmp/app
 echo "arg 2 = $2" # /tmp/cache
+echo "arg 3 = $3" # 
 echo "List of files in $1: `ls $1`" # .tar.gz
 
 # Load config vars into environment (from https://devcenter.heroku.com/articles/buildpack-api)
@@ -164,13 +165,13 @@ fi
 
 if [ -n "${USE_METEOR_NODE+1}" ]; then
   # Copy node into place for production.
+  echo "-----> Using Meteor's Node"  
   NODE="$COMPILE_DIR"/bin/node
   cp "$METEOR_NODE" "$NODE"
 else
   NODE_VER_AVAILABLE=$(curl --silent --get https://semver.io/node/resolve/4.x.x)
 
-  # Download node from Heroku's S3 mirror of nodejs.org/dist
-  status "Downloading and installing node $NODE_VER_AVAILABLE"
+  echo "-----> Downloading and installing node $NODE_VER_AVAILABLE"  
   NODE_INSTALLER=node-installer.tar.gz
   NODE_URL="https://s3pository.heroku.com/node/v$NODE_VER_AVAILABLE/node-v$NODE_VER_AVAILABLE-linux-x64.tar.gz"
   curl $NODE_URL > $NODE_INSTALLER
