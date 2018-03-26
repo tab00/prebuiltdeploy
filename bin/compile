@@ -227,7 +227,7 @@ echo "BUNDLE_DEST = $BUNDLE_DEST" #  /tmp/buildpacks/4ba03ce399e56995160747b832f
 
 echo "APP_SOURCE_DIR = $APP_SOURCE_DIR" # /tmp/app/.meteor/heroku_build
 
-if [ -e "$APP_SOURCE_DIR"/*.gz ]; then
+# if [ -e "$APP_SOURCE_DIR"/*.gz ]; then
 for archive in $APP_SOURCE_DIR/*.gz; do
   echo "archive: $archive"
   tar -zxf $archive -C $BUNDLE_DEST
@@ -237,7 +237,7 @@ done
 # mv $APP_CHECKOUT_DIR/bundle "$COMPILE_DIR/app"
 # else
 #  mv app/* $COMPILE_DIR/app
-fi
+# fi
 
 
 echo "-----> Moving built slug to $COMPILE_DIR/app"
