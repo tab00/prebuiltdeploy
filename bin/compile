@@ -252,6 +252,8 @@ if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
   cd "$APP_SOURCE_DIR"
 fi
 
+$METEOR_NPM audit
+
 #
 # Environment
 #
