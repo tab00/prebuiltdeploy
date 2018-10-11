@@ -170,7 +170,7 @@ if [ -n "${USE_METEOR_NODE+1}" ]; then
   echo "-----> Using Meteor's Node"  
   cp "$METEOR_NODE" "$NODE"
 else
-  NODE_VER_AVAILABLE=$(curl --silent --get https://semver.io/node/resolve/8.x.x)
+  NODE_VER_AVAILABLE=$(curl --silent --get https://semver.io/node/resolve/8.11.x)
 
   echo "-----> Downloading and installing node $NODE_VER_AVAILABLE"  
   NODE_INSTALLER=node-installer.tar.gz
@@ -249,7 +249,7 @@ echo "-----> Installing npm production dependencies on built slug"
 if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
   cd "$COMPILE_DIR"/app/programs/server
   $METEOR_NPM install --production
-  $METEOR_NPM audit
+  $METEOR_NPM audit fix
   cd "$APP_SOURCE_DIR"
 fi
 
