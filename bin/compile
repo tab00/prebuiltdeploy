@@ -170,7 +170,7 @@ if [ -n "${USE_METEOR_NODE+1}" ]; then
   echo "-----> Using Meteor's Node"  
   cp "$METEOR_NODE" "$NODE"
 else
-  NODE_VER_AVAILABLE=$(curl --silent --get https://semver.io/node/resolve/8.x.x)
+  NODE_VER_AVAILABLE=$(curl --silent --get https://semver.io/node/resolve/12.x.x)
 
   echo "-----> Downloading and installing node $NODE_VER_AVAILABLE"  
   NODE_INSTALLER=node-installer.tar.gz
