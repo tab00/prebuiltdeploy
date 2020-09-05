@@ -101,13 +101,12 @@ fi
 # Install meteor
 #
 
-# Install the latest meteor, and rely on meteor to upgrade/downgrade itself to
-# the .meteor/release target.
+# Install meteor based on METEOR_RELEASE
 if [ -e "$METEOR_DIR/.meteor/meteor" ]; then
   echo "-----> Existing meteor installation found, using it."
 else
-  echo "-----> Installing meteor"
-  curl -sS "https://install.meteor.com/" | HOME="$METEOR_DIR" /bin/sh
+  echo "-----> Installing meteor $METEOR_RELEASE"
+  curl -sS "https://install.meteor.com/?release=${METEOR_RELEASE}" | HOME="$METEOR_DIR" /bin/sh
 fi
 # Function to execute meteor with proper HOME.
 function METEOR {
