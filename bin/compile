@@ -97,6 +97,35 @@ if [ -z "$ROOT_URL" ] ; then
   exit 1
 fi
 
+
+
+# Extract app
+# echo "Present working directory: `pwd`" # /home/vcap
+# echo "List of files: `ls`" # app
+# echo "List of files in app: `ls app`"
+
+echo "APP_SOURCE_DIR = $APP_SOURCE_DIR" # /tmp/app/.meteor/heroku_build
+
+# if [ -e "$APP_SOURCE_DIR"/*.gz ]; then
+for archive in $APP_SOURCE_DIR/*.gz; do
+  echo "archive: $archive"
+  tar -zxf $archive -C $BUNDLE_DEST
+  # rm $archive
+done
+# elif [ -e $COMPILE_DIR/bundle ]; then
+# mv $APP_CHECKOUT_DIR/bundle "$COMPILE_DIR/app"
+# else
+#  mv app/* $COMPILE_DIR/app
+# fi
+
+
+
+# Determine METEOR_RELEASE from star.json
+METEOR_RELEASE_STRING=`jq ".meteorRelease" $BUNDLE_DEST/bundle/star.json` # "METEOR@1.11"
+echo "meteorRelease = $METEOR_RELEASE_STRING in star.json"
+METEOR_RELEASE_STRING=${METEOR_RELEASE_STRING//\"} # remove quotation marks
+METEOR_RELEASE="${METEOR_RELEASE_STRING:`expr index $METEOR_RELEASE_STRING @`}"
+
 #
 # Install meteor
 #
@@ -218,25 +247,6 @@ echo "BUNDLE_DEST = $BUNDLE_DEST" #  /tmp/buildpacks/4ba03ce399e56995160747b832f
 # The actual invocation of `meteor build`!
 # METEOR build $BUILD_OPTIONS --server $ROOT_URL $SERVER_ONLY_FLAG --directory $BUNDLE_DEST
 
-
-# Extract app
-# echo "Present working directory: `pwd`" # /home/vcap
-# echo "List of files: `ls`" # app
-# echo "List of files in app: `ls app`"
-
-echo "APP_SOURCE_DIR = $APP_SOURCE_DIR" # /tmp/app/.meteor/heroku_build
-
-# if [ -e "$APP_SOURCE_DIR"/*.gz ]; then
-for archive in $APP_SOURCE_DIR/*.gz; do
-  echo "archive: $archive"
-  tar -zxf $archive -C $BUNDLE_DEST
-  # rm $archive
-done
-# elif [ -e $COMPILE_DIR/bundle ]; then
-# mv $APP_CHECKOUT_DIR/bundle "$COMPILE_DIR/app"
-# else
-#  mv app/* $COMPILE_DIR/app
-# fi
 
 
 echo "-----> Moving built slug to $COMPILE_DIR/app"
