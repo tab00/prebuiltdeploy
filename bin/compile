@@ -99,6 +99,13 @@ fi
 
 
 
+# Now on to bundling. Don't put the bundle in $APP_CHECKOUT_DIR during
+# bundling, or it will recurse, trying to bundle up its own bundling.
+BUNDLE_DEST=`mktemp -d "$BUILDPACK_DIR/build-XXXX"`
+echo "BUNDLE_DEST = $BUNDLE_DEST" #  /tmp/buildpacks/4ba03ce399e56995160747b832f5e464/build-qKQH
+
+
+
 # Extract app
 # echo "Present working directory: `pwd`" # /home/vcap
 # echo "List of files: `ls`" # app
@@ -237,14 +244,9 @@ if [ -n "${BUILDPACK_PRELAUNCH_METEOR+1}" ]; then
   HOME=$METEOR_DIR timeout -s9 60 $METEOR_DIR/.meteor/meteor --settings settings.json || true
 fi
 
-# Now on to bundling. Don't put the bundle in $APP_CHECKOUT_DIR during
-# bundling, or it will recurse, trying to bundle up its own bundling.
-
-echo "-----> Building Meteor app with ROOT_URL: $ROOT_URL"
-BUNDLE_DEST=`mktemp -d "$BUILDPACK_DIR/build-XXXX"`
-echo "BUNDLE_DEST = $BUNDLE_DEST" #  /tmp/buildpacks/4ba03ce399e56995160747b832f5e464/build-qKQH
 
 # The actual invocation of `meteor build`!
+echo "-----> Building Meteor app with ROOT_URL: $ROOT_URL"
 # METEOR build $BUILD_OPTIONS --server $ROOT_URL $SERVER_ONLY_FLAG --directory $BUNDLE_DEST
 
 
