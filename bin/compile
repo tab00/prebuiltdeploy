@@ -113,6 +113,11 @@ echo "BUNDLE_DEST = $BUNDLE_DEST" #  /tmp/buildpacks/4ba03ce399e56995160747b832f
 
 echo "APP_SOURCE_DIR = $APP_SOURCE_DIR" # /tmp/app/.meteor/heroku_build
 
+if [ -e "$APP_SOURCE_DIR"/*.gz.* ]; then
+  cat $APP_SOURCE_DIR/*.gz.* >> $APP_SOURCE_DIR/combined.gz
+  rm $APP_SOURCE_DIR/*.gz.*
+fi
+
 # if [ -e "$APP_SOURCE_DIR"/*.gz ]; then
 for archive in $APP_SOURCE_DIR/*.gz; do
   echo "archive: $archive"
